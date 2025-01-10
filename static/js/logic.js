@@ -1,5 +1,9 @@
 // Store our API endpoint as queryUrl.
-let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+// geojson data for the past month
+// let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+
+// geojson data for the past day
+let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
 
 // Perform a GET request to the query URL/
 d3.json(queryUrl).then(function (data) {
@@ -12,9 +16,7 @@ function markerSize(magnitude) {
 }
 
 let earthquakeMarkers = [];
-let test = data.features[0];
 
-console.log(test)
 // Loop through locations, and create the city and state markers.
 for (let i = 0; i < locations.length; i++) {
     // Setting the marker radius for the state by passing population into the markerSize function
@@ -50,7 +52,6 @@ function createFeatures(earthquakeData) {
 }
 
 function createMap(earthquakes) {
-
   // Create the base layers.
   let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
