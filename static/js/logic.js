@@ -1,5 +1,9 @@
 // Store our API endpoint as queryUrl.
+// geojson data for the past month
 let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+
+// geojson data for the past day
+// let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
 // Perform a GET request to the query URL/
 d3.json(queryUrl).then(function (data) {
@@ -12,22 +16,28 @@ d3.json(queryUrl).then(function (data) {
 function createFeatures(earthquakeData) {
     // Define a function that runs for each feature in the features array
     function onEachFeature(feature, layer) {
-      layer.bindPopup(`<h3>${feature.properties.place}</h3>
+      layer.bindPopup(`<h3>${feature.properties.place}
           <hr>
-          <p><h3>Magnitude: ${feature.properties.mag}</h3>
-          <p>${new Date(feature.properties.time)}</p>`);
+          <p>Magnitude: ${feature.properties.mag}
+          <p>Depth: ${feature.geometry.coordinates[2]}km
+          <p>${new Date(feature.properties.time)}`);
    }
 
-   
+    function getColor(depth) {
+      return depth > 20 ? '#581845' :
+             depth > 15 ? '#900C3F' :
+             depth > 10 ? '#C70039' :
+             depth > 5 ? '#FF5733' :
+                         '#FFC300' ;
+    }
 
     // Create a GeoJSON layer that contains the features array
     let earthquakes = L.geoJSON(earthquakeData, {
         pointToLayer: function (feature, latlng) {
-          console.log(feature.geometry.coordinates[2]);
             return L.circleMarker(latlng, {
                 radius: feature.properties.mag * 4, // Adjust the size based on the magnitude
-                fillColor: `${feature.geometry.coordinates[2]*10}`,
-                color: `${feature.geometry.coordinates[2]}`,
+                fillColor: getColor(feature.geometry.coordinates[2]),
+                color: '#000',
                 weight: 0.5,
                 opacity: 0.01,
                 fillOpacity: 0.8
@@ -86,5 +96,33 @@ function createMap(earthquakes) {
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
+
+  // Set up the legend.
+  let legend = L.control({ position: "bottomright" });
+  legend.onAdd = function() {
+    let div = L.DomUtil.create("div", "info legend");
+    let limits = geojson.options.limits;
+    let colors = geojson.options.colors;
+    let labels = [];
+
+    // Add the minimum and maximum.
+    let legendInfo = "<h1>Population with Children<br />(ages 6-17)</h1>" +
+      "<div class=\"labels\">" +
+        "<div class=\"min\">" + limits[0] + "</div>" +
+        "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+      "</div>";
+
+    div.innerHTML = legendInfo;
+
+    limits.forEach(function(limit, index) {
+      labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+    });
+
+    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+    return div;
+  };
+
+  // Adding the legend to the map
+  legend.addTo(myMap);
 
 }

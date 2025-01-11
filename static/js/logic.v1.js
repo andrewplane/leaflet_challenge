@@ -13,7 +13,7 @@ d3.json(queryUrl).then(function (data) {
     
 
     // Once we get a response, send the data.features object to the createFeatures function.
-  createFeatures(features);
+  createFeatures(data.features);
 });
 
 function createFeatures(earthquakeData) {
@@ -74,22 +74,22 @@ function createMap(earthquakes) {
     layers: [street, earthquakes]
   });
 
-// Loop through locations, and create the city and state markers.
-features.forEach((item, index) => {
-    let location = [item.geometry.coordinates[1], item.geometry.coordinates[0]]
-    // console.log('latlng::', latlng);
+// // Loop through locations, and create the city and state markers.
+// features.forEach((item, index) => {
+//     let location = [item.geometry.coordinates[1], item.geometry.coordinates[0]]
+//     // console.log('latlng::', latlng);
 
-    // Setting the marker radius for the state by passing population into the markerSize function
-    if(location) {
-        L.circleMarker(location, {
-            stroke: false,
-            fillOpacity: 0.75,
-            color: 'white',
-            fillColor: item.geometry.coordinates[2],
-            radius: item.properties.mag*3
-        }).addTo(myMap);
-    }
-});
+//     // Setting the marker radius for the state by passing population into the markerSize function
+//     if(location) {
+//         L.circleMarker(location, {
+//             stroke: false,
+//             fillOpacity: 0.75,
+//             color: 'white',
+//             fillColor: item.geometry.coordinates[2],
+//             radius: item.properties.mag*3
+//         }).addTo(myMap);
+//     }
+// });
 
   // Create a layer control.
   // Pass it our baseMaps and overlayMaps.
