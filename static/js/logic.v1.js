@@ -7,9 +7,13 @@ let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_da
 
 // Perform a GET request to the query URL/
 d3.json(queryUrl).then(function (data) {
+    
+    let features = data.features
+
+    
 
     // Once we get a response, send the data.features object to the createFeatures function.
-  createFeatures(data.features);
+  createFeatures(features);
 });
 
 function createFeatures(earthquakeData) {
@@ -28,25 +32,10 @@ function createFeatures(earthquakeData) {
       onEachFeature: onEachFeature
     });
   
-    let earthquakeMarkers = [];
+    // let earthquakeMarkers = [];
 
-    // Loop through locations, and create the city and state markers.
-    earthquakeData.forEach((item, index) => {
-        let location = [item.geometry.coordinates[1], item.geometry.coordinates[0]]
-        // console.log('latlng::', latlng);
 
-        // Setting the marker radius for the state by passing population into the markerSize function
-        earthquakeMarkers.push(
-            L.circle(location, {
-                stroke: false,
-                fillOpacity: 0.75,
-                color: item.geometry.coordinates[2],
-                fillColor: "white",
-                radius: item.properties.mag
-            })
-        );
-});
-
+    console.log('earthquakes::', earthquakes);
     // Send our earthquakes layer to the createMap function/
     createMap(earthquakes);
 }
@@ -84,6 +73,23 @@ function createMap(earthquakes) {
     zoom: 5,
     layers: [street, earthquakes]
   });
+
+// Loop through locations, and create the city and state markers.
+features.forEach((item, index) => {
+    let location = [item.geometry.coordinates[1], item.geometry.coordinates[0]]
+    // console.log('latlng::', latlng);
+
+    // Setting the marker radius for the state by passing population into the markerSize function
+    if(location) {
+        L.circleMarker(location, {
+            stroke: false,
+            fillOpacity: 0.75,
+            color: 'white',
+            fillColor: item.geometry.coordinates[2],
+            radius: item.properties.mag*3
+        }).addTo(myMap);
+    }
+});
 
   // Create a layer control.
   // Pass it our baseMaps and overlayMaps.
