@@ -1,9 +1,9 @@
 // Store our API endpoint as queryUrl.
 // geojson data for the past month
-let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+// let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
 // geojson data for the past day
-// let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
 
 // Perform a GET request to the query URL/
 d3.json(queryUrl).then(function (data) {
@@ -50,15 +50,6 @@ function createFeatures(earthquakeData) {
     createMap(earthquakes);
 }
 
-// Function to determine color based on magnitude
-function getColor(magnitude) {
-    return magnitude > 5 ? 'red' :
-           magnitude > 4 ? 'orange' :
-           magnitude > 3 ? 'yellow' :
-           magnitude > 2 ? 'green' :
-           'blue';
-}
-
 // Create the map
 function createMap(earthquakes) {
   // Create the base layers.
@@ -99,30 +90,19 @@ function createMap(earthquakes) {
 
   // Set up the legend.
   let legend = L.control({ position: "bottomright" });
+
   legend.onAdd = function() {
-    let div = L.DomUtil.create("div", "info legend");
-    let limits = geojson.options.limits;
-    let colors = geojson.options.colors;
-    let labels = [];
-
-    // Add the minimum and maximum.
-    let legendInfo = "<h1>Population with Children<br />(ages 6-17)</h1>" +
-      "<div class=\"labels\">" +
-        "<div class=\"min\">" + limits[0] + "</div>" +
-        "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-      "</div>";
-
-    div.innerHTML = legendInfo;
-
-    limits.forEach(function(limit, index) {
-      labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-    });
-
-    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+    div.innerHTML += "<h4>Earthquake Depth Legend</h4>";
+    div.innerHTML += '<i style="background: #581845"></i><span>20+ km</span><br>';
+    div.innerHTML += '<i style="background: #900C3F"></i><span>15-20 km</span><br>';
+    div.innerHTML += '<i style="background: #C70039"></i><span>10-15 km</span><br>';
+    div.innerHTML += '<i style="background: #FF5733"></i><span>5-10 km</span><br>';
+    div.innerHTML += '<i style="background: #FFC300"></i><span>0-5 km</span><br>';
+    
     return div;
   };
-
-  // Adding the legend to the map
-  legend.addTo(myMap);
+  
+  legend.addTo(map);
+  
 
 }
