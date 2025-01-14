@@ -23,6 +23,14 @@ function createFeatures(earthquakeData) {
           <p>${new Date(feature.properties.time)}`);
    }
 
+    // var colorScale = L.scale.linear()
+    //   .domain([0, 100])
+    //   .range(['#66FF66', '#CC0000']);
+
+    // function getColor(value) {
+    //   return colorScale(value);
+    // }  
+
     function getColor(depth) {
       return depth > 20 ? '#581845' :
              depth > 15 ? '#900C3F' :
