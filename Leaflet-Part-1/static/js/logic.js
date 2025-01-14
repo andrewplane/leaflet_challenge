@@ -92,17 +92,30 @@ function createMap(earthquakes) {
   let legend = L.control({ position: "bottomright" });
 
   legend.onAdd = function() {
-    div.innerHTML += "<h4>Earthquake Depth Legend</h4>";
-    div.innerHTML += '<i style="background: #581845"></i><span>20+ km</span><br>';
-    div.innerHTML += '<i style="background: #900C3F"></i><span>15-20 km</span><br>';
-    div.innerHTML += '<i style="background: #C70039"></i><span>10-15 km</span><br>';
-    div.innerHTML += '<i style="background: #FF5733"></i><span>5-10 km</span><br>';
-    div.innerHTML += '<i style="background: #FFC300"></i><span>0-5 km</span><br>';
-    
-    return div;
+    // create div
+    let div = L.DomUtil.create('div', 'info legend');
+    // add legend content
+    div.innerHTML = "<h4>Legend</h4>" +
+                  "<i style='background: yellow'></i> Coming Soon<br>" +
+                  "<i style='background: red'></i> Empty Stations<br>" +
+                  "<i style='background: orange'></i> Low Stations<br>" +
+                  "<i style='background: green'></i> Healthy Stations<br>" +
+                  "<i style='background: blue'></i> Out of Order<br>";
+  
+  return div;
   };
   
-  legend.addTo(map);
+  legend.addTo(myMap);
+}
+
   
 
-}
+
+    // div.map += "<h4>Earthquake Depth Legend</h4>";
+    // div.map += '<i style="background: #581845"></i><span>20+ km</span><br>';
+    // div.map += '<i style="background: #900C3F"></i><span>15-20 km</span><br>';
+    // div.map += '<i style="background: #C70039"></i><span>10-15 km</span><br>';
+    // div.map += '<i style="background: #FF5733"></i><span>5-10 km</span><br>';
+    // div.map += '<i style="background: #FFC300"></i><span>0-5 km</span><br>';
+    
+    // return div;
