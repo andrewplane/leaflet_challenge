@@ -104,11 +104,11 @@ function createMap(earthquakes) {
     let div = L.DomUtil.create('div', 'info legend');
     // add legend content
     div.innerHTML = "<h4>Legend</h4>" +
-                  "<i style='background: yellow'></i> Coming Soon<br>" +
-                  "<i style='background: red'></i> Empty Stations<br>" +
-                  "<i style='background: orange'></i> Low Stations<br>" +
-                  "<i style='background: green'></i> Healthy Stations<br>" +
-                  "<i style='background: blue'></i> Out of Order<br>";
+                  "<i style='background: #581845'></i> depth > 20 km<br>" +
+                  "<i style='background: #900C3F'></i> 15 - 20 km<br>" +
+                  "<i style='background: #C70039'></i> 10 - 15 km<br>" +
+                  "<i style='background: #FF5733'></i> 5 - 10 km<br>" +
+                  "<i style='background: #FFC300'></i> O - 5 km<br>";
   
   return div;
   };
@@ -116,7 +116,13 @@ function createMap(earthquakes) {
   legend.addTo(myMap);
 }
 
-  
+// function getColor(depth) {
+//   return depth > 20 ? '#581845' :
+//          depth > 15 ? '#900C3F' :
+//          depth > 10 ? '#C70039' :
+//          depth > 5 ? '#FF5733' :
+//                      '#FFC300' ;
+// }
 
 
     // div.map += "<h4>Earthquake Depth Legend</h4>";
