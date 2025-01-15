@@ -2,8 +2,12 @@
 // geojson data for the past month
 // let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
+// geojson data for the past week
+let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+
 // geojson data for the past day
-let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+// let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+
 
 // Perform a GET request to the query URL/
 d3.json(queryUrl).then(function (data) {
@@ -32,10 +36,10 @@ function createFeatures(earthquakeData) {
     // }  
 
     function getColor(depth) {
-      return depth > 20 ? '#581845' :
-             depth > 15 ? '#900C3F' :
-             depth > 10 ? '#C70039' :
-             depth > 5 ? '#FF5733' :
+      return depth > 80 ? '#581845' :
+             depth > 60 ? '#900C3F' :
+             depth > 40 ? '#C70039' :
+             depth > 20 ? '#FF5733' :
                          '#FFC300' ;
     }
 
@@ -101,14 +105,14 @@ function createMap(earthquakes) {
 
   legend.onAdd = function() {
     // create div
-    let div = L.DomUtil.create('div', 'info legend');
+    let div = L.DomUtil.create('div', 'legend');
     // add legend content
-    div.innerHTML = "<h4>Legend</h4>" +
-                  "<i style='background: #581845'></i> depth > 20 km<br>" +
-                  "<i style='background: #900C3F'></i> 15 - 20 km<br>" +
-                  "<i style='background: #C70039'></i> 10 - 15 km<br>" +
-                  "<i style='background: #FF5733'></i> 5 - 10 km<br>" +
-                  "<i style='background: #FFC300'></i> O - 5 km<br>";
+    div.innerHTML = "<h2><center>Legend</center></h2>" +
+                  "<i style='background: #581845'></i> depth > 80 km<br>" +
+                  "<i style='background: #900C3F'></i> 60 - 80 km<br>" +
+                  "<i style='background: #C70039'></i> 40 - 60 km<br>" +
+                  "<i style='background: #FF5733'></i> 20 - 40 km<br>" +
+                  "<i style='background: #FFC300'></i> O - 20 km<br>";
   
   return div;
   };
