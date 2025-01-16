@@ -1,0 +1,40 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#map,
+body,
+html {
+  height: 100%;
+}
+
+/*Legend specific*/
+.legend {
+  border: 1px solid black;
+  font-weight: bold;
+  color: blue;
+  text-align: left;
+  font-size: 16px;
+  width: 150px;
+  height: 150px;
+  line-height: 18px;
+  background: white;
+  opacity: 1;
+}
+
+.legend i {
+  width: 15px;
+  height: 15px;
+  float: left;
+  margin-right: 8px;
+  margin-left: 8px;
+  opacity: 1.0;
+}
+
+.legend .square2 {
+  border-radius: 50%;
+  width: 50px;
+  height: 10px;
+  margin-top: 0px;
+}
