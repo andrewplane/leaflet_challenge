@@ -1,16 +1,16 @@
 // Store our API endpoint as queryUrl.
 // geojson data for the past month
-// let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+let queryUrlMonth = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
 // geojson data for the past week
-let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+let queryUrlWeek = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // geojson data for the past day
-// let queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+let queryUrlDay = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
 
 
 // Perform a GET request to the query URL/
-d3.json(queryUrl).then(function (data) {
+d3.json(queryUrlWeek).then(function (data) {
     
   // Once we get a response, send the data.features object to the createFeatures function.
   createFeatures(data.features);
@@ -27,14 +27,6 @@ function createFeatures(earthquakeData) {
           <p>${new Date(feature.properties.time)}`);
    }
 
-    // var colorScale = L.scale.linear()
-    //   .domain([0, 100])
-    //   .range(['#66FF66', '#CC0000']);
-
-    // function getColor(value) {
-    //   return colorScale(value);
-    // }  
-
     function getColor(depth) {
       return depth > 80 ? '#581845' :
              depth > 60 ? '#900C3F' :
@@ -47,11 +39,11 @@ function createFeatures(earthquakeData) {
     let earthquakes = L.geoJSON(earthquakeData, {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, {
-                radius: feature.properties.mag * 4, // Adjust the size based on the magnitude
+                radius: feature.properties.mag * 5, // Adjust the size based on the magnitude
                 fillColor: getColor(feature.geometry.coordinates[2]),
                 color: '#000',
-                weight: 0.5,
-                opacity: 0.01,
+                weight: 0.8,
+                opacity: 0.3,
                 fillOpacity: 0.8
             });
         },

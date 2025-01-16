@@ -27,14 +27,6 @@ function createFeatures(earthquakeData) {
           <p>${new Date(feature.properties.time)}`);
    }
 
-    // var colorScale = L.scale.linear()
-    //   .domain([0, 100])
-    //   .range(['#66FF66', '#CC0000']);
-
-    // function getColor(value) {
-    //   return colorScale(value);
-    // }  
-
     function getColor(depth) {
       return depth > 80 ? '#581845' :
              depth > 60 ? '#900C3F' :
@@ -47,11 +39,11 @@ function createFeatures(earthquakeData) {
     let earthquakes = L.geoJSON(earthquakeData, {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, {
-                radius: feature.properties.mag * 4, // Adjust the size based on the magnitude
+                radius: feature.properties.mag * 5, // Adjust the size based on the magnitude
                 fillColor: getColor(feature.geometry.coordinates[2]),
                 color: '#000',
-                weight: 0.5,
-                opacity: 0.01,
+                weight: 0.8,
+                opacity: 0.3,
                 fillOpacity: 0.8
             });
         },
